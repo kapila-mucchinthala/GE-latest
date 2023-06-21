@@ -20,48 +20,6 @@
         }
       ],
       "id": 1
-    },
-    {
-      "project_name": "name",
-      "project_description": "desc",
-      "total_tables": "11",
-      "total_files": "22",
-      "owners": [
-        {
-          "owner_name": "aa",
-          "owner_designation": "xx"
-        },
-        {
-          "owner_name": "q",
-          "owner_designation": "q"
-        },
-        {
-          "owner_name": "q",
-          "owner_designation": "q"
-        }
-      ],
-      "id": 2
-    },
-    {
-      "project_name": "GE",
-      "project_description": "GEDESC",
-      "total_tables": "11",
-      "total_files": "11",
-      "owners": [
-        {
-          "owner_name": "aa",
-          "owner_designation": "xx"
-        },
-        {
-          "owner_name": "q",
-          "owner_designation": "q"
-        },
-        {
-          "owner_name": "q",
-          "owner_designation": "q"
-        }
-      ],
-      "id": 3
     }
   ]
 }
