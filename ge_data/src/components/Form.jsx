@@ -70,7 +70,7 @@ export const Form = () => {
   
     try {
       // await axios.post("http://localhost:3990/data", info);
-      await axios.post("https://internal-bu-dna-dra-docstar-alb-1252189529.us-east-1.elb.amazonaws.com/postgres/projects/", info);
+      await axios.post("http://ec2-13-235-110-40.ap-south-1.compute.amazonaws.com/postgres/projects/", info);
 
       // Clear the form input fields
       setFormData({
@@ -127,7 +127,7 @@ export const Form = () => {
     try {
       // const id = 2;
       // const response = await axios.get(`http://localhost:3990/data/${id}`);
-      const response = await axios.get("https://internal-bu-dna-dra-docstar-alb-1252189529.us-east-1.elb.amazonaws.com/postgres/projects/");
+      const response = await axios.get("http://ec2-13-235-110-40.ap-south-1.compute.amazonaws.com/postgres/projects/");
       console.log("Response:", response.data);
       const projectDetails = response.data;
       console.log("Project details:", projectDetails);
