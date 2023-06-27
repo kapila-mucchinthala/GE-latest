@@ -63,7 +63,7 @@ export const Form = () => {
       owners: updatedOwners,
     };
 
-    const trail ={data:[info]};
+    const formDetails ={data:[info]};
 
     // Validate the form
     if (!validateForm()) {
@@ -71,11 +71,11 @@ export const Form = () => {
     }
 
     try {
-      const usersName = JSON.stringify(trail);
+      const formData = JSON.stringify(formDetails);
       const response = await axios({
         method: "post",
         url: "http://ec2-13-235-110-40.ap-south-1.compute.amazonaws.com/postgres/projects/",
-        data: usersName,
+        data: formData,
         headers: { "Content-Type": "application/json" },
       });
   
