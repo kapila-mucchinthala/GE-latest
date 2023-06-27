@@ -1,7 +1,7 @@
 import React from "react";
 import Styles from "./form.module.css";
 import axios from 'axios';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const Form = () => {
   const [formData, setFormData] = useState({
@@ -46,7 +46,7 @@ export const Form = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Filter the owners array to include only non-empty owners
@@ -62,16 +62,23 @@ export const Form = () => {
       total_files: formData.total_files,
       owners: updatedOwners,
     };
-     console.log("info:", info);
+
+    const trail ={data:[info]};
+
     // Validate the form
     if (!validateForm()) {
       return;
     }
-  
-    try {
-      // await axios.post("http://localhost:3990/data", info);
-      await axios.post("http://ec2-13-235-110-40.ap-south-1.compute.amazonaws.com/postgres/projects/", info);
 
+    try {
+      const usersName = JSON.stringify(trail);
+      const response = await axios({
+        method: "post",
+        url: "http://ec2-13-235-110-40.ap-south-1.compute.amazonaws.com/postgres/projects/",
+        data: usersName,
+        headers: { "Content-Type": "application/json" },
+      });
+  
       // Clear the form input fields
       setFormData({
         project_name: "",
@@ -122,21 +129,17 @@ export const Form = () => {
   };
   
   const fetchProjectDetails = async () => {
-    console.log("Fetching project details...");
-
     try {
-      // const id = 2;
-      // const response = await axios.get(`http://localhost:3990/data/${id}`);
-      const response = await axios.get("http://ec2-13-235-110-40.ap-south-1.compute.amazonaws.com/postgres/projects/");
-      console.log("Response:", response.data);
-      const projectDetails = response.data;
-      console.log("Project details:", projectDetails);
-      // Update the form data with the retrieved details
-      setProjectDetails(projectDetails);
+      axios.get("http://ec2-13-235-110-40.ap-south-1.compute.amazonaws.com/postgres/projects/").then((response) => {
+      setProjectDetails(response.data.data[0]);
+    });
     } catch (error) {
       console.error("Error fetching project details:", error);
     }
   };
+
+  useEffect(() => {
+  }, [projectDetails]);
 
   return (
     <div>
@@ -203,6 +206,12 @@ export const Form = () => {
 
         <div>
           {/* Display the fetched project details */}
+          {/* {projectDetails.map((pro, i) => (
+                <div key={i}>
+                  <p>Name: {pro.project_name}</p>
+                  <p>Designation: {pro.project_description}</p>
+                </div>
+              ))} */}
           {projectDetails && (
             <div className={Styles.projectDetails}>
               <h2>Project Details</h2>
@@ -212,7 +221,7 @@ export const Form = () => {
               <p>Total Files: {projectDetails.total_files}</p>
 
               <h3>Owners:</h3>
-              {projectDetails.owners.map((owner, index) => (
+              {projectDetails?.owners?.map((owner, index) => (
                 <div key={index}>
                   <p>Name: {owner.owner_name}</p>
                   <p>Designation: {owner.owner_designation}</p>
